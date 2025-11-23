@@ -1,0 +1,44 @@
+# Configuración de Nginx para Sounds of the World
+# Coloca este contenido en tu configuración de Nginx o en un archivo de sitio
+
+server {
+    listen 80;
+    server_name _;
+    root /usr/share/nginx/html;  # Ajusta según tu configuración
+    index index.html;
+
+    # Servir archivos estáticos
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    # Rewrite para sound-cards (equivalente al .htaccess)
+    # Permite usar: /sound-cards/gnaoua en lugar de /sound-card.html?p=gnaoua
+    location ~ ^/sound-cards/(.+)$ {
+        rewrite ^/sound-cards/(.+)$ /sound-card.html?p=$1 last;
+    }
+
+    # También aceptar el formato directo
+    location = /sound-card.html {
+        try_files $uri =404;
+    }
+
+    # Servir archivos JSON
+    location ~ \.json$ {
+        add_header Content-Type application/json;
+        add_header Access-Control-Allow-Origin *;
+    }
+
+    # Cache para archivos estáticos
+    location ~* \.(jpg|jpeg|png|gif|ico|css|js|json)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+
+    # Página de error 404
+    error_page 404 /404.html;
+    location = /404.html {
+        internal;
+    }
+}
+

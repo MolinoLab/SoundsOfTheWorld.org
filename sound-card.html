@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8' />
+<title id="pageTitle">Sound cards | Sounds of the World</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<meta id="metaDescription" name="description" content="Sound cards from Sounds of the World">
+<meta id="metaKeywords" name="keywords" content="sounds, soundscapes, world music">
+<meta name="author" content="b1tdreamer">
+<link rel="apple-touch-icon" sizes="180x180" href="/img/180icon.png">
+<link rel="manifest" href="/img/192icon.png">
+<link rel="icon" href="/img/64icon.png">
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.css' rel='stylesheet' />
+<link href='/css/sotw.css' rel='stylesheet' />
+</head>
+<body>
+	<div class="logo">
+		<a href="/" title="Sounds Of the World">
+      <img src="/img/SoundsOfTheWorld-title.png" alt="Sounds of the World title"/>
+  		<img class="logoCircle" src="/img/SoundsOfTheWorld_circle.png" alt="Sounds of the World circle"/>
+		</a>
+	</div>
+	<div id='map'></div>
+	<div class="sound-card" id="soundCard">
+		<span class="close" id="closeBtn">&times;</span>
+		<div id="cardContent">
+			<p>Cargando...</p>
+		</div>
+	</div>
+<script>
+// Obtener parámetro de la URL
+function getUrlParameter(name) {
+	name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+	var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+	var results = regex.exec(location.search);
+	return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+}
+
+// Función para capitalizar primera letra
+function capitalizeFirst(str) {
+	return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+// Función para escapar HTML (prevenir XSS)
+function escapeHtml(text) {
+	var map = {
+		'&': '&amp;',
+		'<': '&lt;',
+		'>': '&gt;',
+		'"': '&quot;',
+		"'": '&#039;'
+	};
+	return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+}
+
+// Función para convertir saltos de línea a <br>
+function nl2br(str) {
+	return str.replace(/\n/g, '<br>');
+}
+
+// Cargar y mostrar la tarjeta
+function loadCard(cardName) {
+	fetch('/data/cards.json')
+		.then(response => {
+			if (!response.ok) {
+				throw new Error('Error al cargar los datos');
+			}
+			return response.json();
+		})
+		.then(data => {
+			// Buscar la tarjeta por nombre
+			var card = data.cards.find(function(c) {
+				return c.name === cardName;
+			});
+
+			if (!card) {
+				document.getElementById('cardContent').innerHTML = '<p>Tarjeta no encontrada</p>';
+				return;
+			}
+
+			// Actualizar meta tags
+			document.getElementById('pageTitle').textContent = capitalizeFirst(card.name) + ' - Sound cards | Sounds of the World';
+			document.getElementById('metaDescription').setAttribute('content', escapeHtml(card.description));
+			document.getElementById('metaKeywords').setAttribute('content', escapeHtml(card.tags));
+
+			// Construir el contenido HTML
+			var html = '<h1>' + escapeHtml(card.title) + '</h1>';
+
+			// Video o imagen
+			if (card.video_id) {
+				html += '<div class="videoWrapper" style="--aspect-ratio: 3 / 4;">';
+				html += '<iframe class="infoMedia" src="https://www.youtube.com/embed/' + escapeHtml(card.video_id) + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+				html += '</div>';
+			} else {
+				html += '<img class="infoMedia" src="/cards/' + escapeHtml(card.name) + '.jpg" alt="' + escapeHtml(card.name) + '"/>';
+			}
+
+			html += '<h3>' + escapeHtml(card.location) + ' - ' + escapeHtml(card.date) + '</h3>';
+			html += '<a href="https://instagram.com/' + escapeHtml(card.author) + '" title="Created by ' + escapeHtml(card.author) + '" target="_blank"><h2 class="author">@' + escapeHtml(card.author) + '</h2></a>';
+			html += '<div class="infoCard">';
+			html += '<p>' + nl2br(escapeHtml(card.description)) + '</p>';
+			html += '</div>';
+			html += '<iframe width="100%" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/' + card.audio_id + '&color=%23f6cf00&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>';
+
+			document.getElementById('cardContent').innerHTML = html;
+		})
+		.catch(error => {
+			console.error('Error:', error);
+			document.getElementById('cardContent').innerHTML = '<p>Error al cargar la tarjeta: ' + escapeHtml(error.message) + '</p>';
+		});
+}
+
+// Botón de cerrar
+document.getElementById('closeBtn').addEventListener('click', function() {
+	window.location.href = '/';
+});
+
+// Inicializar mapa
+mapboxgl.accessToken = "pk.eyJ1IjoiYjF0ZHJlYW1lciIsImEiOiJjazNrc2R2ZTkwOXQ3M2pxcWN3NHF2eWg3In0.Q_eYKI5Jv6EJH_5Bc97lFw";
+var map = new mapboxgl.Map({
+	container: 'map',
+	style: 'mapbox://styles/b1tdreamer/ck3othd2m0p9c1cp0qg1uln74',
+	center: [10.922027, 19.816733],
+	zoom: 2.25
+});
+
+// Cargar la tarjeta cuando la página esté lista
+document.addEventListener('DOMContentLoaded', function() {
+	var cardName = getUrlParameter('p');
+	if (cardName) {
+		loadCard(cardName);
+	} else {
+		document.getElementById('cardContent').innerHTML = '<p>No se especificó una tarjeta</p>';
+	}
+});
+</script>
+</body>
+</html>
+

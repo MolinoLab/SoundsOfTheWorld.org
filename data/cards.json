@@ -1,0 +1,101 @@
+{
+  "cards": [
+    {
+      "id": 1,
+      "name": "gnaoua",
+      "title": "Gnaoua Music Festival",
+      "video_id": "QZikzsJFsLk",
+      "audio_id": 523899282,
+      "author": "b1tdreamer",
+      "date": "2017-06-15",
+      "location": "Essaouira, Maroc",
+      "description": "Inauguration of the 21st edition of the festival of gnawa music and world music in Essaouira, Morocco.",
+      "tags": "gnawa music festival morocco"
+    },
+    {
+      "id": 2,
+      "name": "lalibela",
+      "title": "Lalibela churches",
+      "video_id": "",
+      "audio_id": 524174118,
+      "author": "b1tdreamer",
+      "date": "2018-02-06",
+      "location": "Lalibela, Ethiopia",
+      "description": "Praying in the Orthodox Christian churches of Lalibella, Ethiopia on 6 February 2018",
+      "tags": "sounds praying lalibela Ethiopia Christian Africa"
+    },
+    {
+      "id": 3,
+      "name": "masai",
+      "title": "Masai Mara",
+      "video_id": "ly341f2eXY0",
+      "audio_id": 739654618,
+      "author": "b1tdreamer",
+      "date": "2018-09-11",
+      "location": "Masai Mara, Kenya",
+      "description": "Masai welcome song recorded in Masai Mara on September 2019",
+      "tags": "masai mara kenya welcome song"
+    },
+    {
+      "id": 4,
+      "name": "maroc-woman",
+      "title": "Maroc woman singing",
+      "video_id": "",
+      "audio_id": 772732222,
+      "author": "b1tdreamer",
+      "date": "2017-06-11",
+      "location": "Dalmaghmik, Maroc",
+      "description": "Woman singing with a guitar in Dalmaghmik, Morocco in June 2018",
+      "tags": "woman singing guitar morocco"
+    },
+    {
+      "id": 5,
+      "name": "dalol",
+      "title": "Dalol",
+      "video_id": "",
+      "audio_id": 772744015,
+      "author": "b1tdreamer",
+      "date": "2018-03-22",
+      "location": "Dalol, Ethiopia",
+      "description": "Soundscape of the fumaroles in Dalol, Dankil depression, Ethiopia.\nRecorded in March 2018.",
+      "tags": "fumaroles dalol dankil depression Ethiopia"
+    },
+    {
+      "id": 6,
+      "name": "spider",
+      "title": "The spider web",
+      "video_id": "",
+      "audio_id": 734770768,
+      "author": "b1tdreamer",
+      "date": "2018-12-23",
+      "location": "Reserva Yotoco, Colombia",
+      "description": "Howler monkey soundscape in the Yotoco reserve near Lake Calima in Colombia in December 2019\n\nPaisaje sonoro de los monos aulladores en la reserva Yotoco, cerca del lago Calima en Colombia en diciembre de 2019",
+      "tags": "howler monkeys reserve yotoco nature spiders Colombia"
+    },
+    {
+      "id": 7,
+      "name": "violin-vilcas",
+      "title": "Carnival orquestra",
+      "video_id": "",
+      "audio_id": 769004857,
+      "author": "b1tdreamer",
+      "date": "2020-02-22",
+      "location": "Vilcashuaman, Peru",
+      "description": "Parades during the Vilcashuaman carnival in Peru Violin and Harp in the interludes with winds in the choruses.",
+      "tags": "violin harp carnival orchestra Peru"
+    },
+    {
+      "id": 8,
+      "name": "condor",
+      "title": "Condor",
+      "video_id": "",
+      "audio_id": 772815802,
+      "author": "b1tdreamer",
+      "date": "2020-03-04",
+      "location": "Colca canyon, Peru",
+      "description": "Poem about the condor, in the Colca Canyon, Peru\n\nAccompanied by Yawar Mestas to the sicu.\n\nPoem by Yeison Medina Medina\nPhotography by Sandra Ramirez Giraldo\n\nCondor",
+      "tags": "condor colca canyon poem Peru"
+    }
+  ]
+}
+
